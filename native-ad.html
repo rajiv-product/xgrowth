@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Native Ad | AdSter Documentation</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/png" href="../images/favicon.png">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <a href="index.html" class="logo">
+            <img src="../images/adster-logo.webp" alt="AdSter">
+            <span>Documentation</span>
+        </a>
+        <div class="header-actions">
+            <div class="search-box">
+                <span>🔍</span>
+                <input type="text" placeholder="Search documentation...">
+            </div>
+            <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
+        </div>
+    </header>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <nav class="sidebar-nav">
+            <div class="nav-group">
+                <a href="index.html" class="nav-item">
+                    <span class="icon">📱</span>
+                    SDK Implementation Guide
+                </a>
+            </div>
+
+            <div class="nav-group">
+                <div class="nav-group-title">How to Configure</div>
+                <a href="initializing-sdk.html" class="nav-item">
+                    <span class="icon">💡</span>
+                    Initializing the SDK
+                </a>
+            </div>
+
+            <div class="nav-group">
+                <div class="nav-group-title">How to Render an Ad</div>
+                <a href="app-open.html" class="nav-item">
+                    <span class="icon">📪</span>
+                    App Open
+                </a>
+                <a href="banner-ad.html" class="nav-item">
+                    <span class="icon">📪</span>
+                    Banner Ad
+                </a>
+                <a href="interstitial-ad.html" class="nav-item">
+                    <span class="icon">📪</span>
+                    Interstitial Ad
+                </a>
+                <a href="rewarded-ad.html" class="nav-item">
+                    <span class="icon">📪</span>
+                    Rewarded Ad
+                </a>
+                <a href="native-ad.html" class="nav-item active">
+                    <span class="icon">📪</span>
+                    Native Ad
+                </a>
+            </div>
+
+            <div class="nav-group">
+                <div class="nav-group-title">Beta Ad Formats</div>
+                <a href="in-stream-video.html" class="nav-item">
+                    <span class="icon">🎨</span>
+                    In-stream Video (Beta)
+                </a>
+                <a href="banner-video.html" class="nav-item">
+                    <span class="icon">🎨</span>
+                    Banner Video (Beta)
+                </a>
+            </div>
+
+            <div class="nav-group">
+                <div class="nav-group-title">Additional Features</div>
+                <a href="ads-txt-management.html" class="nav-item">
+                    <span class="icon">📄</span>
+                    Ads.txt Management
+                </a>
+            </div>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="content">
+            <h1><span>📪</span> Native Ad</h1>
+
+            <p>This page provides comprehensive instructions for implementing native advertisements within your Android application using the AdSter SDK. Native ads match the look and feel of your app's content.</p>
+
+            <h2>Step 1: Create Ad Request Configuration</h2>
+
+            <p>Initialize the configuration with your placement name:</p>
+
+            <div class="tabs">
+                <div class="tab active">Java</div>
+                <div class="tab">Kotlin</div>
+            </div>
+
+            <div class="tab-content active">
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-lang">Java</span>
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    </div>
+                    <pre><code>AdRequestConfiguration.Builder configuration =
+    AdRequestConfiguration.Companion.builder(context, <span class="string">"Your_placement_name"</span>);</code></pre>
+                </div>
+            </div>
+
+            <div class="tab-content">
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-lang">Kotlin</span>
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    </div>
+                    <pre><code><span class="keyword">val</span> configuration = AdRequestConfiguration.builder(context, <span class="string">"Your_placement_name"</span>)</code></pre>
+                </div>
+            </div>
+
+            <h2>Step 2: Load the Advertisement</h2>
+
+            <p>Implement the ad loader with listener callbacks for success and failure scenarios:</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-lang">Java</span>
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                </div>
+                <pre><code>AdSterAdLoader.Companion.builder()
+    .withAdsListener(<span class="keyword">new</span> MediationAdListener() {
+        <span class="annotation">@Override</span>
+        <span class="keyword">public void</span> <span class="function">onNativeAdLoaded</span>(<span class="annotation">@NonNull</span> MediationNativeAd ad) {
+            <span class="comment">// Show native ad here</span>
+        }
+
+        <span class="annotation">@Override</span>
+        <span class="keyword">public void</span> <span class="function">onFailure</span>(<span class="annotation">@NonNull</span> AdError adError) {
+            <span class="comment">// Handle failure</span>
+        }
+    })
+    .withNativeAdEventsListener(<span class="keyword">new</span> NativeAdEventsListener() {
+        <span class="annotation">@Override</span>
+        <span class="keyword">public void</span> <span class="function">onAdClicked</span>() { }
+
+        <span class="annotation">@Override</span>
+        <span class="keyword">public void</span> <span class="function">onAdImpression</span>() { }
+
+        <span class="annotation">@Override</span>
+        <span class="keyword">public void</span> <span class="function">onAdRevenuePaid</span>(<span class="keyword">double</span> revenue,
+            String adUnitId, String network) { }
+    })
+    .build()
+    .loadAd(configuration.build());</code></pre>
+            </div>
+
+            <h2>Step 3: Define Layout XML</h2>
+
+            <p>Create a layout file containing UI elements for displaying ad content:</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-lang">XML</span>
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                </div>
+                <pre><code>&lt;<span class="class">com.adster.mediation.nativead.MediationNativeAdView</span>
+    <span class="annotation">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span>
+    <span class="annotation">android:id</span>=<span class="string">"@+id/native_ad_view"</span>
+    <span class="annotation">android:layout_width</span>=<span class="string">"match_parent"</span>
+    <span class="annotation">android:layout_height</span>=<span class="string">"wrap_content"</span>&gt;
+
+    &lt;<span class="class">LinearLayout</span>
+        <span class="annotation">android:layout_width</span>=<span class="string">"match_parent"</span>
+        <span class="annotation">android:layout_height</span>=<span class="string">"wrap_content"</span>
+        <span class="annotation">android:orientation</span>=<span class="string">"vertical"</span>&gt;
+
+        <span class="comment">&lt;!-- Ad Title --&gt;</span>
+        &lt;<span class="class">TextView</span>
+            <span class="annotation">android:id</span>=<span class="string">"@+id/ad_headline"</span>
+            <span class="annotation">android:layout_width</span>=<span class="string">"match_parent"</span>
+            <span class="annotation">android:layout_height</span>=<span class="string">"wrap_content"</span> /&gt;
+
+        <span class="comment">&lt;!-- Ad Body --&gt;</span>
+        &lt;<span class="class">TextView</span>
+            <span class="annotation">android:id</span>=<span class="string">"@+id/ad_body"</span>
+            <span class="annotation">android:layout_width</span>=<span class="string">"match_parent"</span>
+            <span class="annotation">android:layout_height</span>=<span class="string">"wrap_content"</span> /&gt;
+
+        <span class="comment">&lt;!-- Media View --&gt;</span>
+        &lt;<span class="class">FrameLayout</span>
+            <span class="annotation">android:id</span>=<span class="string">"@+id/ad_media"</span>
+            <span class="annotation">android:layout_width</span>=<span class="string">"match_parent"</span>
+            <span class="annotation">android:layout_height</span>=<span class="string">"200dp"</span> /&gt;
+
+        <span class="comment">&lt;!-- Call to Action Button --&gt;</span>
+        &lt;<span class="class">Button</span>
+            <span class="annotation">android:id</span>=<span class="string">"@+id/ad_call_to_action"</span>
+            <span class="annotation">android:layout_width</span>=<span class="string">"wrap_content"</span>
+            <span class="annotation">android:layout_height</span>=<span class="string">"wrap_content"</span> /&gt;
+
+    &lt;/<span class="class">LinearLayout</span>&gt;
+
+&lt;/<span class="class">com.adster.mediation.nativead.MediationNativeAdView</span>&gt;</code></pre>
+            </div>
+
+            <h2>Step 4: Display the Native Ad</h2>
+
+            <div class="alert alert-info">
+                <span class="alert-icon">💡</span>
+                <div class="alert-content">
+                    <div class="alert-title">Critical Requirements</div>
+                    <ul>
+                        <li>Call <code>trackViews()</code> before adding the view to container</li>
+                        <li>Call <code>setNativeAd()</code> method before rendering</li>
+                        <li>Use <code>MediationNativeAdView</code> as parent container</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-lang">Java</span>
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                </div>
+                <pre><code><span class="annotation">@Override</span>
+<span class="keyword">public void</span> <span class="function">onNativeAdLoaded</span>(<span class="annotation">@NonNull</span> MediationNativeAd ad) {
+    <span class="comment">// Inflate your native ad layout</span>
+    MediationNativeAdView adView = (MediationNativeAdView) getLayoutInflater()
+        .inflate(R.layout.native_ad_layout, <span class="keyword">null</span>);
+
+    <span class="comment">// Set ad content to views</span>
+    TextView headline = adView.findViewById(R.id.ad_headline);
+    headline.setText(ad.getHeadline());
+
+    TextView body = adView.findViewById(R.id.ad_body);
+    body.setText(ad.getBody());
+
+    Button cta = adView.findViewById(R.id.ad_call_to_action);
+    cta.setText(ad.getCallToAction());
+
+    <span class="comment">// Set native ad and track views</span>
+    adView.setNativeAd(ad);
+    ad.trackViews(adView, mediaView, clickableViews);
+
+    <span class="comment">// Add to container</span>
+    container.removeAllViews();
+    container.addView(adView);
+}</code></pre>
+            </div>
+
+            <h2>Step 5: Clean Up Resources</h2>
+
+            <p>Call <code>MediationNativeAd.destroy()</code> during activity or fragment destruction:</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-lang">Java</span>
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                </div>
+                <pre><code><span class="annotation">@Override</span>
+<span class="keyword">protected void</span> <span class="function">onDestroy</span>() {
+    <span class="keyword">super</span>.onDestroy();
+    <span class="keyword">if</span> (nativeAd != <span class="keyword">null</span>) {
+        nativeAd.destroy();
+    }
+}</code></pre>
+            </div>
+
+            <h2>Key Callbacks</h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Callback</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>onNativeAdLoaded()</code></td>
+                        <td>Triggered when ad loads successfully</td>
+                    </tr>
+                    <tr>
+                        <td><code>onFailure()</code></td>
+                        <td>Handles error conditions</td>
+                    </tr>
+                    <tr>
+                        <td><code>onAdClicked()</code></td>
+                        <td>Tracks user interactions</td>
+                    </tr>
+                    <tr>
+                        <td><code>onAdImpression()</code></td>
+                        <td>Records ad impressions</td>
+                    </tr>
+                    <tr>
+                        <td><code>onAdRevenuePaid()</code></td>
+                        <td>Reports revenue data</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="alert alert-info">
+                <span class="alert-icon">💡</span>
+                <div class="alert-content">
+                    <div class="alert-title">Tips</div>
+                    <ul>
+                        <li>Ensure proper view attachment order to maintain tracking functionality</li>
+                        <li>Use image loading libraries (e.g., Glide) for logo rendering</li>
+                        <li>Set layout parameters matching parent container specifications</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Page Navigation -->
+            <div class="page-nav">
+                <a href="rewarded-ad.html" class="page-nav-link">
+                    <span class="page-nav-label">Previous</span>
+                    <span class="page-nav-title">← Rewarded Ad</span>
+                </a>
+                <a href="in-stream-video.html" class="page-nav-link">
+                    <span class="page-nav-label">Next</span>
+                    <span class="page-nav-title">In-stream Video (Beta) →</span>
+                </a>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <p>© 2024 AdSter Technology. All rights reserved.</p>
+        </footer>
+    </main>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Banner Video (Beta) | AdSter Documentation</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/png" href="../images/favicon.png">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <a href="index.html" class="logo">
+            <img src="../images/adster-logo.webp" alt="AdSter">
+            <span>Documentation</span>
+        </a>
+        <div class="header-actions">
+            <div class="search-box">
+                <span>🔍</span>
+                <input type="text" placeholder="Search documentation...">
+            </div>
+            <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
+        </div>
+    </header>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <nav class="sidebar-nav">
+            <div class="nav-group">
+                <a href="index.html" class="nav-item">
+                    <span class="icon">📱</span>
+                    SDK Implementation Guide
+                </a>
+            </div>
+
+            <div class="nav-group">
+                <div class="nav-group-title">How to Configure</div>
+                <a href="initializing-sdk.html" class="nav-item">
+                    <span class="icon">💡</span>
+                    Initializing the SDK
+                </a>
+            </div>
+
+            <div class="nav-group">
+                <div class="nav-group-title">How to Render an Ad</div>
+                <a href="app-open.html" class="nav-item">
+                    <span class="icon">📪</span>
+                    App Open
+                </a>
+                <a href="banner-ad.html" class="nav-item">
+                    <span class="icon">📪</span>
+                    Banner Ad
+                </a>
+                <a href="interstitial-ad.html" class="nav-item">
+                    <span class="icon">📪</span>
+                    Interstitial Ad
+                </a>
+                <a href="rewarded-ad.html" class="nav-item">
+                    <span class="icon">📪</span>
+                    Rewarded Ad
+                </a>
+                <a href="native-ad.html" class="nav-item">
+                    <span class="icon">📪</span>
+                    Native Ad
+                </a>
+            </div>
+
+            <div class="nav-group">
+                <div class="nav-group-title">Beta Ad Formats</div>
+                <a href="in-stream-video.html" class="nav-item">
+                    <span class="icon">🎨</span>
+                    In-stream Video (Beta)
+                </a>
+                <a href="banner-video.html" class="nav-item active">
+                    <span class="icon">🎨</span>
+                    Banner Video (Beta)
+                </a>
+            </div>
+
+            <div class="nav-group">
+                <div class="nav-group-title">Additional Features</div>
+                <a href="ads-txt-management.html" class="nav-item">
+                    <span class="icon">📄</span>
+                    Ads.txt Management
+                </a>
+            </div>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="content">
+            <h1><span>🎨</span> Banner Video (Beta)</h1>
+
+            <div class="alert alert-info">
+                <span class="alert-icon">🧪</span>
+                <div class="alert-content">
+                    <div class="alert-title">Beta Feature</div>
+                    <p>This is a beta ad format. The API may change in future releases.</p>
+                </div>
+            </div>
+
+            <p>The AdSter SDK enables loading and displaying in-stream video advertisements in a banner format. Banner video ads display video content within a banner-sized container.</p>
+
+            <h2>Configuration</h2>
+
+            <p>Create an <code>AdRequestConfiguration</code> with your placement name:</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-lang">Kotlin</span>
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                </div>
+                <pre><code><span class="keyword">val</span> configuration = AdRequestConfiguration.Companion.builder(context, <span class="string">"Your_placement_name"</span>)</code></pre>
+            </div>
+
+            <h2>Loading and Displaying Banner Video Ads</h2>
+
+            <div class="tabs">
+                <div class="tab active">Java</div>
+                <div class="tab">Kotlin</div>
+            </div>
+
+            <div class="tab-content active">
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-lang">Java</span>
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    </div>
+                    <pre><code>AdSterAdLoader.Companion.builder()
+    .withAdsListener(<span class="keyword">new</span> MediationAdListener() {
+        <span class="annotation">@Override</span>
+        <span class="keyword">public void</span> <span class="function">onBannerVideoAdLoaded</span>(<span class="annotation">@NonNull</span> MediationBannerVideoAd ad) {
+            <span class="comment">// Use the ad object provided here to display the ad</span>
+            bannerVideoAd = ad;
+        }
+
+        <span class="annotation">@Override</span>
+        <span class="keyword">public void</span> <span class="function">onFailure</span>(<span class="annotation">@NonNull</span> AdError adError) {
+            <span class="comment">// Handle failure</span>
+        }
+    })
+    .withAdsEventsListener(<span class="keyword">new</span> AdEventsListener() {
+        <span class="annotation">@Override</span>
+        <span class="keyword">public void</span> <span class="function">onAdClicked</span>() {
+            <span class="comment">// Handle ad click here</span>
+        }
+
+        <span class="annotation">@Override</span>
+        <span class="keyword">public void</span> <span class="function">onAdImpression</span>() {
+            <span class="comment">// Handle ad impression here</span>
+        }
+
+        <span class="annotation">@Override</span>
+        <span class="keyword">public void</span> <span class="function">onAdRevenuePaid</span>(<span class="keyword">double</span> revenue,
+            <span class="annotation">@NotNull</span> String adUnitId, <span class="annotation">@NotNull</span> String network) {
+            <span class="comment">// Callback which provides revenue and the network</span>
+        }
+    })
+    .build()
+    .loadAd(configuration.build());</code></pre>
+                </div>
+            </div>
+
+            <div class="tab-content">
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-lang">Kotlin</span>
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    </div>
+                    <pre><code>AdSterAdLoader.builder()
+    .withAdsListener(<span class="keyword">object</span> : MediationAdListener() {
+        <span class="keyword">override fun</span> <span class="function">onBannerVideoAdLoaded</span>(ad: MediationBannerVideoAd) {
+            <span class="comment">// Use the ad object provided here to display the ad</span>
+            bannerVideoAd = ad
+        }
+
+        <span class="keyword">override fun</span> <span class="function">onFailure</span>(adError: AdError) {
+            <span class="comment">// Handle failure</span>
+        }
+    })
+    .withBannerVideoAdEventsListener(<span class="keyword">object</span> : VideoAdEventsListener() {
+        <span class="keyword">override fun</span> <span class="function">onAdPaused</span>() { }
+        <span class="keyword">override fun</span> <span class="function">onAdPlayed</span>() { }
+        <span class="keyword">override fun</span> <span class="function">onAdResumed</span>() { }
+        <span class="keyword">override fun</span> <span class="function">onAdStopped</span>() { }
+        <span class="keyword">override fun</span> <span class="function">onAdSkipped</span>() { }
+        <span class="keyword">override fun</span> <span class="function">onVolumeChanged</span>(volumeDelta: Int) { }
+        <span class="keyword">override fun</span> <span class="function">onAllAdCompleted</span>() { }
+        <span class="keyword">override fun</span> <span class="function">onContentPauseRequested</span>() { }
+        <span class="keyword">override fun</span> <span class="function">onContentResumeRequested</span>() { }
+        <span class="keyword">override fun</span> <span class="function">onAdClicked</span>() { }
+        <span class="keyword">override fun</span> <span class="function">onAdLoadFailure</span>(adError: AdError) { }
+        <span class="keyword">override fun</span> <span class="function">onAdTapped</span>() { }
+        <span class="keyword">override fun</span> <span class="function">onSkippableStateChanged</span>() { }
+    })
+    .build()
+    .loadAd(configuration.build())</code></pre>
+                </div>
+            </div>
+
+            <h2>Lifecycle Management</h2>
+
+            <p>Use the ad object's methods to manage lifecycle events (pause, resume, destroy):</p>
+
+            <div class="tabs">
+                <div class="tab active">Java</div>
+                <div class="tab">Kotlin</div>
+            </div>
+
+            <div class="tab-content active">
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-lang">Java</span>
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    </div>
+                    <pre><code><span class="keyword">private</span> MediationBannerVideoAd bannerVideoAd = <span class="keyword">null</span>;
+
+<span class="annotation">@Override</span>
+<span class="keyword">protected void</span> <span class="function">onPause</span>() {
+    <span class="keyword">super</span>.onPause();
+    <span class="keyword">if</span> (bannerVideoAd != <span class="keyword">null</span>) {
+        bannerVideoAd.pause();
+    }
+}
+
+<span class="annotation">@Override</span>
+<span class="keyword">protected void</span> <span class="function">onResume</span>() {
+    <span class="keyword">super</span>.onResume();
+    <span class="keyword">if</span> (bannerVideoAd != <span class="keyword">null</span>) {
+        bannerVideoAd.resume();
+    }
+}
+
+<span class="annotation">@Override</span>
+<span class="keyword">protected void</span> <span class="function">onDestroy</span>() {
+    <span class="keyword">super</span>.onDestroy();
+    <span class="keyword">if</span> (bannerVideoAd != <span class="keyword">null</span>) {
+        bannerVideoAd.destroy();
+    }
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="tab-content">
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-lang">Kotlin</span>
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    </div>
+                    <pre><code><span class="keyword">private var</span> bannerVideoAd: MediationBannerVideoAd? = <span class="keyword">null</span>
+
+<span class="keyword">override fun</span> <span class="function">onPause</span>() {
+    <span class="keyword">super</span>.onPause()
+    bannerVideoAd?.pause()
+}
+
+<span class="keyword">override fun</span> <span class="function">onResume</span>() {
+    <span class="keyword">super</span>.onResume()
+    bannerVideoAd?.resume()
+}
+
+<span class="keyword">override fun</span> <span class="function">onDestroy</span>() {
+    <span class="keyword">super</span>.onDestroy()
+    bannerVideoAd?.destroy()
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="alert alert-warning">
+                <span class="alert-icon">⚠️</span>
+                <div class="alert-content">
+                    <div class="alert-title">Important</div>
+                    <p>Always manage the banner video ad lifecycle properly to prevent memory leaks and ensure smooth video playback experience.</p>
+                </div>
+            </div>
+
+            <!-- Page Navigation -->
+            <div class="page-nav">
+                <a href="in-stream-video.html" class="page-nav-link">
+                    <span class="page-nav-label">Previous</span>
+                    <span class="page-nav-title">← In-stream Video (Beta)</span>
+                </a>
+                <a href="ads-txt-management.html" class="page-nav-link">
+                    <span class="page-nav-label">Next</span>
+                    <span class="page-nav-title">Ads.txt Management →</span>
+                </a>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <p>© 2024 AdSter Technology. All rights reserved.</p>
+        </footer>
+    </main>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

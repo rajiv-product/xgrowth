@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Initializing the SDK | AdSter Documentation</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/png" href="../images/favicon.png">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <a href="index.html" class="logo">
+            <img src="../images/adster-logo.webp" alt="AdSter">
+            <span>Documentation</span>
+        </a>
+        <div class="header-actions">
+            <div class="search-box">
+                <span>🔍</span>
+                <input type="text" placeholder="Search documentation...">
+            </div>
+            <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
+        </div>
+    </header>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <nav class="sidebar-nav">
+            <div class="nav-group">
+                <a href="index.html" class="nav-item">
+                    <span class="icon">📱</span>
+                    SDK Implementation Guide
+                </a>
+            </div>
+
+            <div class="nav-group">
+                <div class="nav-group-title">How to Configure</div>
+                <a href="initializing-sdk.html" class="nav-item active">
+                    <span class="icon">💡</span>
+                    Initializing the SDK
+                </a>
+            </div>
+
+            <div class="nav-group">
+                <div class="nav-group-title">How to Render an Ad</div>
+                <a href="app-open.html" class="nav-item">
+                    <span class="icon">📪</span>
+                    App Open
+                </a>
+                <a href="banner-ad.html" class="nav-item">
+                    <span class="icon">📪</span>
+                    Banner Ad
+                </a>
+                <a href="interstitial-ad.html" class="nav-item">
+                    <span class="icon">📪</span>
+                    Interstitial Ad
+                </a>
+                <a href="rewarded-ad.html" class="nav-item">
+                    <span class="icon">📪</span>
+                    Rewarded Ad
+                </a>
+                <a href="native-ad.html" class="nav-item">
+                    <span class="icon">📪</span>
+                    Native Ad
+                </a>
+            </div>
+
+            <div class="nav-group">
+                <div class="nav-group-title">Beta Ad Formats</div>
+                <a href="in-stream-video.html" class="nav-item">
+                    <span class="icon">🎨</span>
+                    In-stream Video (Beta)
+                </a>
+                <a href="banner-video.html" class="nav-item">
+                    <span class="icon">🎨</span>
+                    Banner Video (Beta)
+                </a>
+            </div>
+
+            <div class="nav-group">
+                <div class="nav-group-title">Additional Features</div>
+                <a href="ads-txt-management.html" class="nav-item">
+                    <span class="icon">📄</span>
+                    Ads.txt Management
+                </a>
+            </div>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="content">
+            <h1><span>💡</span> Initializing the SDK</h1>
+
+            <p>To set up the SDK, developers must invoke the <code>initializeSDK()</code> function within their application class at the earliest opportunity.</p>
+
+            <p>The <code>initializeSDK()</code> function returns an <code>AdapterStatus</code> list and implements the following pattern:</p>
+
+            <h2>Java Implementation</h2>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-lang">Java</span>
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                </div>
+                <pre><code>AdSter.INSTANCE.initializeSdk(getApplicationContext(), AdapterStatus -> {
+    <span class="comment">// Initialization completes here</span>
+});</code></pre>
+            </div>
+
+            <h2>Kotlin Implementation</h2>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-lang">Kotlin</span>
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                </div>
+                <pre><code>AdSter.initializeSdk(getApplicationContext(), <span class="keyword">object</span> : InitializationListener {
+    <span class="keyword">override fun</span> <span class="function">onInitializationComplete</span>(adapterStatus: List&lt;AdapterStatus&gt;) {
+        <span class="comment">// Initialization completes here</span>
+    }
+})</code></pre>
+            </div>
+
+            <div class="alert alert-warning">
+                <span class="alert-icon">⚠️</span>
+                <div class="alert-content">
+                    <div class="alert-title">Important</div>
+                    <p>All load ad requests are to be called only after the completion of the initialization of the SDK.</p>
+                </div>
+            </div>
+
+            <!-- Page Navigation -->
+            <div class="page-nav">
+                <a href="index.html" class="page-nav-link">
+                    <span class="page-nav-label">Previous</span>
+                    <span class="page-nav-title">← SDK Implementation Guide</span>
+                </a>
+                <a href="app-open.html" class="page-nav-link">
+                    <span class="page-nav-label">Next</span>
+                    <span class="page-nav-title">App Open →</span>
+                </a>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <p>© 2024 AdSter Technology. All rights reserved.</p>
+        </footer>
+    </main>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

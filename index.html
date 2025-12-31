@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SDK Implementation Guide | AdSter Documentation</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/png" href="../images/favicon.png">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <a href="index.html" class="logo">
+            <img src="../images/adster-logo.webp" alt="AdSter">
+            <span>Documentation</span>
+        </a>
+        <div class="header-actions">
+            <div class="search-box">
+                <span>🔍</span>
+                <input type="text" placeholder="Search documentation...">
+            </div>
+            <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
+        </div>
+    </header>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <nav class="sidebar-nav">
+            <div class="nav-group">
+                <a href="index.html" class="nav-item active">
+                    <span class="icon">📱</span>
+                    SDK Implementation Guide
+                </a>
+            </div>
+
+            <div class="nav-group">
+                <div class="nav-group-title">How to Configure</div>
+                <a href="initializing-sdk.html" class="nav-item">
+                    <span class="icon">💡</span>
+                    Initializing the SDK
+                </a>
+            </div>
+
+            <div class="nav-group">
+                <div class="nav-group-title">How to Render an Ad</div>
+                <a href="app-open.html" class="nav-item">
+                    <span class="icon">📪</span>
+                    App Open
+                </a>
+                <a href="banner-ad.html" class="nav-item">
+                    <span class="icon">📪</span>
+                    Banner Ad
+                </a>
+                <a href="interstitial-ad.html" class="nav-item">
+                    <span class="icon">📪</span>
+                    Interstitial Ad
+                </a>
+                <a href="rewarded-ad.html" class="nav-item">
+                    <span class="icon">📪</span>
+                    Rewarded Ad
+                </a>
+                <a href="native-ad.html" class="nav-item">
+                    <span class="icon">📪</span>
+                    Native Ad
+                </a>
+            </div>
+
+            <div class="nav-group">
+                <div class="nav-group-title">Beta Ad Formats</div>
+                <a href="in-stream-video.html" class="nav-item">
+                    <span class="icon">🎨</span>
+                    In-stream Video (Beta)
+                </a>
+                <a href="banner-video.html" class="nav-item">
+                    <span class="icon">🎨</span>
+                    Banner Video (Beta)
+                </a>
+            </div>
+
+            <div class="nav-group">
+                <div class="nav-group-title">Additional Features</div>
+                <a href="ads-txt-management.html" class="nav-item">
+                    <span class="icon">📄</span>
+                    Ads.txt Management
+                </a>
+            </div>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="content">
+            <h1><span>📱</span> SDK Implementation Guide</h1>
+
+            <p>Welcome to the AdSter SDK Implementation Guide. This documentation will help you integrate the AdSter SDK into your Android application for displaying various ad formats.</p>
+
+            <h2>App Prerequisites</h2>
+
+            <p>Before integrating the AdSter SDK, ensure your app meets the following requirements:</p>
+
+            <ul>
+                <li><strong>Minimum SDK Version:</strong> 21 or higher</li>
+                <li><strong>Compile SDK Version:</strong> 33 or higher</li>
+            </ul>
+
+            <h2>Manifest Configuration</h2>
+
+            <p>Add the following permissions to your <code>AndroidManifest.xml</code> file:</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-lang">XML</span>
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                </div>
+                <pre><code><span class="annotation">&lt;uses-permission</span> <span class="class">android:name</span>=<span class="string">"android.permission.INTERNET"</span> <span class="annotation">/&gt;</span>
+<span class="annotation">&lt;uses-permission</span> <span class="class">android:name</span>=<span class="string">"com.google.android.gms.permission.AD_ID"</span><span class="annotation">/&gt;</span></code></pre>
+            </div>
+
+            <p>For testing SDK initialization without an AdMob account, add the following meta-data inside your <code>&lt;application&gt;</code> tag:</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-lang">XML</span>
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                </div>
+                <pre><code><span class="annotation">&lt;meta-data</span> <span class="class">android:name</span>=<span class="string">"com.google.android.gms.ads.APPLICATION_ID"</span>
+    <span class="class">android:value</span>=<span class="string">"ca-app-pub-3940256099942544~3347511713"</span> <span class="annotation">/&gt;</span></code></pre>
+            </div>
+
+            <h2>Dependency Setup</h2>
+
+            <p>Open your <code>build.gradle</code> (Module: app) file and add the SDK dependency:</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-lang">Gradle</span>
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                </div>
+                <pre><code><span class="function">implementation</span> <span class="string">'com.adstertech:orchestrationsdk-lite:2.2.1'</span></code></pre>
+            </div>
+
+            <h2>ProGuard Configuration</h2>
+
+            <p>For release builds with ProGuard enabled, add the following rules to your <code>proguard-rules.pro</code> file:</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-lang">ProGuard</span>
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                </div>
+                <pre><code><span class="keyword">-keep</span> <span class="class">class</span> com.adster.** { *; }</code></pre>
+            </div>
+
+            <div class="alert alert-info">
+                <span class="alert-icon">💡</span>
+                <div class="alert-content">
+                    <div class="alert-title">Next Steps</div>
+                    <p>After completing these initial setup steps, proceed to the <a href="initializing-sdk.html">Initializing the SDK</a> section to configure the SDK in your application.</p>
+                </div>
+            </div>
+
+            <!-- Page Navigation -->
+            <div class="page-nav">
+                <div></div>
+                <a href="initializing-sdk.html" class="page-nav-link">
+                    <span class="page-nav-label">Next</span>
+                    <span class="page-nav-title">Initializing the SDK →</span>
+                </a>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <p>© 2024 AdSter Technology. All rights reserved.</p>
+        </footer>
+    </main>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

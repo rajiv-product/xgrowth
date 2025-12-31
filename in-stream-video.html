@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>In-stream Video (Beta) | AdSter Documentation</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/png" href="../images/favicon.png">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <a href="index.html" class="logo">
+            <img src="../images/adster-logo.webp" alt="AdSter">
+            <span>Documentation</span>
+        </a>
+        <div class="header-actions">
+            <div class="search-box">
+                <span>🔍</span>
+                <input type="text" placeholder="Search documentation...">
+            </div>
+            <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
+        </div>
+    </header>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <nav class="sidebar-nav">
+            <div class="nav-group">
+                <a href="index.html" class="nav-item">
+                    <span class="icon">📱</span>
+                    SDK Implementation Guide
+                </a>
+            </div>
+
+            <div class="nav-group">
+                <div class="nav-group-title">How to Configure</div>
+                <a href="initializing-sdk.html" class="nav-item">
+                    <span class="icon">💡</span>
+                    Initializing the SDK
+                </a>
+            </div>
+
+            <div class="nav-group">
+                <div class="nav-group-title">How to Render an Ad</div>
+                <a href="app-open.html" class="nav-item">
+                    <span class="icon">📪</span>
+                    App Open
+                </a>
+                <a href="banner-ad.html" class="nav-item">
+                    <span class="icon">📪</span>
+                    Banner Ad
+                </a>
+                <a href="interstitial-ad.html" class="nav-item">
+                    <span class="icon">📪</span>
+                    Interstitial Ad
+                </a>
+                <a href="rewarded-ad.html" class="nav-item">
+                    <span class="icon">📪</span>
+                    Rewarded Ad
+                </a>
+                <a href="native-ad.html" class="nav-item">
+                    <span class="icon">📪</span>
+                    Native Ad
+                </a>
+            </div>
+
+            <div class="nav-group">
+                <div class="nav-group-title">Beta Ad Formats</div>
+                <a href="in-stream-video.html" class="nav-item active">
+                    <span class="icon">🎨</span>
+                    In-stream Video (Beta)
+                </a>
+                <a href="banner-video.html" class="nav-item">
+                    <span class="icon">🎨</span>
+                    Banner Video (Beta)
+                </a>
+            </div>
+
+            <div class="nav-group">
+                <div class="nav-group-title">Additional Features</div>
+                <a href="ads-txt-management.html" class="nav-item">
+                    <span class="icon">📄</span>
+                    Ads.txt Management
+                </a>
+            </div>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="content">
+            <h1><span>🎨</span> In-stream Video (Beta)</h1>
+
+            <div class="alert alert-info">
+                <span class="alert-icon">🧪</span>
+                <div class="alert-content">
+                    <div class="alert-title">Beta Feature</div>
+                    <p>This is a beta ad format. The API may change in future releases.</p>
+                </div>
+            </div>
+
+            <p>The AdSter SDK supports loading and displaying in-stream video ads, which is a proprietary ad format from the IMA SDK. In-stream video ads play within video content.</p>
+
+            <h2>Configuration</h2>
+
+            <p>Create an <code>AdRequestConfiguration</code> with video player and content URL:</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-lang">Java</span>
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                </div>
+                <pre><code>AdRequestConfiguration configuration = AdRequestConfiguration.Companion
+    .builder(context, <span class="string">"Your_placement_name"</span>)
+    .addVideoPlayer(playerView, audioManager)
+    .setContentUrl(<span class="string">"https://your-video-url.mp4"</span>)
+    .build();</code></pre>
+            </div>
+
+            <h2>Loading and Displaying Video Ads</h2>
+
+            <div class="tabs">
+                <div class="tab active">Java</div>
+                <div class="tab">Kotlin</div>
+            </div>
+
+            <div class="tab-content active">
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-lang">Java</span>
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    </div>
+                    <pre><code>AdSterAdLoader.Companion.builder()
+    .withAdsListener(<span class="keyword">new</span> MediationAdListener() {
+        <span class="annotation">@Override</span>
+        <span class="keyword">public void</span> <span class="function">onVideoAdLoaded</span>(<span class="annotation">@NonNull</span> MediationVideoAd ad) {
+            Log.d(<span class="string">"AdCallback"</span>, <span class="string">"Ad Loaded"</span>);
+        }
+
+        <span class="annotation">@Override</span>
+        <span class="keyword">public void</span> <span class="function">onFailure</span>(<span class="annotation">@NonNull</span> AdError error) {
+            Log.e(<span class="string">"AdCallback"</span>, <span class="string">"Ad Load Failed: "</span> + error.getErrorMessage());
+        }
+    })
+    .withVideoAdEventsListener(<span class="keyword">new</span> VideoAdEventsListener() {
+        <span class="annotation">@Override</span>
+        <span class="keyword">public void</span> <span class="function">onAdPlayed</span>() { }
+
+        <span class="annotation">@Override</span>
+        <span class="keyword">public void</span> <span class="function">onAdSkipped</span>() { }
+
+        <span class="annotation">@Override</span>
+        <span class="keyword">public void</span> <span class="function">onAdStopped</span>() { }
+
+        <span class="annotation">@Override</span>
+        <span class="keyword">public void</span> <span class="function">onAllAdCompleted</span>() { }
+
+        <span class="annotation">@Override</span>
+        <span class="keyword">public void</span> <span class="function">onContentPauseRequested</span>() { }
+
+        <span class="annotation">@Override</span>
+        <span class="keyword">public void</span> <span class="function">onContentResumeRequested</span>() { }
+
+        <span class="annotation">@Override</span>
+        <span class="keyword">public void</span> <span class="function">onAdLoadFailure</span>(<span class="annotation">@NonNull</span> AdError error) { }
+
+        <span class="annotation">@Override</span>
+        <span class="keyword">public void</span> <span class="function">onAdClicked</span>() { }
+
+        <span class="annotation">@Override</span>
+        <span class="keyword">public void</span> <span class="function">onVolumeChanged</span>(<span class="keyword">int</span> delta) { }
+
+        <span class="annotation">@Override</span>
+        <span class="keyword">public void</span> <span class="function">onAdTapped</span>() { }
+
+        <span class="annotation">@Override</span>
+        <span class="keyword">public void</span> <span class="function">onAdPaused</span>() { }
+
+        <span class="annotation">@Override</span>
+        <span class="keyword">public void</span> <span class="function">onSkippableStateChanged</span>() { }
+    })
+    .build()
+    .loadAd(configuration);</code></pre>
+                </div>
+            </div>
+
+            <div class="tab-content">
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-lang">Kotlin</span>
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    </div>
+                    <pre><code>AdSterAdLoader.builder()
+    .withAdsListener(<span class="keyword">object</span> : MediationAdListener {
+        <span class="keyword">override fun</span> <span class="function">onVideoAdLoaded</span>(ad: MediationVideoAd) {
+            Log.d(<span class="string">"AdCallback"</span>, <span class="string">"Ad Loaded"</span>)
+        }
+
+        <span class="keyword">override fun</span> <span class="function">onFailure</span>(error: AdError) {
+            Log.e(<span class="string">"AdCallback"</span>, <span class="string">"Ad Load Failed: </span>${error.errorMessage}<span class="string">"</span>)
+        }
+    })
+    .withVideoAdEventsListener(<span class="keyword">object</span> : VideoAdEventsListener() {
+        <span class="keyword">override fun</span> <span class="function">onAdPlayed</span>() { }
+        <span class="keyword">override fun</span> <span class="function">onAdSkipped</span>() { }
+        <span class="keyword">override fun</span> <span class="function">onAdStopped</span>() { }
+        <span class="keyword">override fun</span> <span class="function">onAllAdCompleted</span>() { }
+        <span class="keyword">override fun</span> <span class="function">onContentPauseRequested</span>() { }
+        <span class="keyword">override fun</span> <span class="function">onContentResumeRequested</span>() { }
+        <span class="keyword">override fun</span> <span class="function">onAdLoadFailure</span>(error: AdError) { }
+        <span class="keyword">override fun</span> <span class="function">onAdClicked</span>() { }
+        <span class="keyword">override fun</span> <span class="function">onVolumeChanged</span>(delta: Int) { }
+        <span class="keyword">override fun</span> <span class="function">onAdTapped</span>() { }
+        <span class="keyword">override fun</span> <span class="function">onAdPaused</span>() { }
+        <span class="keyword">override fun</span> <span class="function">onSkippableStateChanged</span>() { }
+    })
+    .build()
+    .loadAd(configuration)</code></pre>
+                </div>
+            </div>
+
+            <h2>Video Ad Event Callbacks</h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Callback</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>onAdPlayed()</code></td>
+                        <td>Video ad started playing</td>
+                    </tr>
+                    <tr>
+                        <td><code>onAdSkipped()</code></td>
+                        <td>User skipped the ad</td>
+                    </tr>
+                    <tr>
+                        <td><code>onAdStopped()</code></td>
+                        <td>Video ad was stopped</td>
+                    </tr>
+                    <tr>
+                        <td><code>onAllAdCompleted()</code></td>
+                        <td>All ads in the queue completed</td>
+                    </tr>
+                    <tr>
+                        <td><code>onContentPauseRequested()</code></td>
+                        <td>Content should be paused for ad</td>
+                    </tr>
+                    <tr>
+                        <td><code>onContentResumeRequested()</code></td>
+                        <td>Content can resume after ad</td>
+                    </tr>
+                    <tr>
+                        <td><code>onAdLoadFailure()</code></td>
+                        <td>Ad failed to load</td>
+                    </tr>
+                    <tr>
+                        <td><code>onAdClicked()</code></td>
+                        <td>User clicked on the ad</td>
+                    </tr>
+                    <tr>
+                        <td><code>onVolumeChanged()</code></td>
+                        <td>Volume level changed</td>
+                    </tr>
+                    <tr>
+                        <td><code>onAdTapped()</code></td>
+                        <td>User tapped the ad</td>
+                    </tr>
+                    <tr>
+                        <td><code>onAdPaused()</code></td>
+                        <td>Ad was paused</td>
+                    </tr>
+                    <tr>
+                        <td><code>onSkippableStateChanged()</code></td>
+                        <td>Ad skip availability changed</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Page Navigation -->
+            <div class="page-nav">
+                <a href="native-ad.html" class="page-nav-link">
+                    <span class="page-nav-label">Previous</span>
+                    <span class="page-nav-title">← Native Ad</span>
+                </a>
+                <a href="banner-video.html" class="page-nav-link">
+                    <span class="page-nav-label">Next</span>
+                    <span class="page-nav-title">Banner Video (Beta) →</span>
+                </a>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <p>© 2024 AdSter Technology. All rights reserved.</p>
+        </footer>
+    </main>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

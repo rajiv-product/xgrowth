@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interstitial Ad | AdSter Documentation</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/png" href="../images/favicon.png">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <a href="index.html" class="logo">
+            <img src="../images/adster-logo.webp" alt="AdSter">
+            <span>Documentation</span>
+        </a>
+        <div class="header-actions">
+            <div class="search-box">
+                <span>🔍</span>
+                <input type="text" placeholder="Search documentation...">
+            </div>
+            <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
+        </div>
+    </header>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <nav class="sidebar-nav">
+            <div class="nav-group">
+                <a href="index.html" class="nav-item">
+                    <span class="icon">📱</span>
+                    SDK Implementation Guide
+                </a>
+            </div>
+
+            <div class="nav-group">
+                <div class="nav-group-title">How to Configure</div>
+                <a href="initializing-sdk.html" class="nav-item">
+                    <span class="icon">💡</span>
+                    Initializing the SDK
+                </a>
+            </div>
+
+            <div class="nav-group">
+                <div class="nav-group-title">How to Render an Ad</div>
+                <a href="app-open.html" class="nav-item">
+                    <span class="icon">📪</span>
+                    App Open
+                </a>
+                <a href="banner-ad.html" class="nav-item">
+                    <span class="icon">📪</span>
+                    Banner Ad
+                </a>
+                <a href="interstitial-ad.html" class="nav-item active">
+                    <span class="icon">📪</span>
+                    Interstitial Ad
+                </a>
+                <a href="rewarded-ad.html" class="nav-item">
+                    <span class="icon">📪</span>
+                    Rewarded Ad
+                </a>
+                <a href="native-ad.html" class="nav-item">
+                    <span class="icon">📪</span>
+                    Native Ad
+                </a>
+            </div>
+
+            <div class="nav-group">
+                <div class="nav-group-title">Beta Ad Formats</div>
+                <a href="in-stream-video.html" class="nav-item">
+                    <span class="icon">🎨</span>
+                    In-stream Video (Beta)
+                </a>
+                <a href="banner-video.html" class="nav-item">
+                    <span class="icon">🎨</span>
+                    Banner Video (Beta)
+                </a>
+            </div>
+
+            <div class="nav-group">
+                <div class="nav-group-title">Additional Features</div>
+                <a href="ads-txt-management.html" class="nav-item">
+                    <span class="icon">📄</span>
+                    Ads.txt Management
+                </a>
+            </div>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="content">
+            <h1><span>📪</span> Interstitial Ad</h1>
+
+            <p>This guide provides instructions for loading and displaying interstitial ads in your application. Interstitial ads are full-screen ads that cover the interface of their host app.</p>
+
+            <h2>Step 1: Create AdRequestConfiguration</h2>
+
+            <p>Initialize the ad request with your placement name:</p>
+
+            <div class="tabs">
+                <div class="tab active">Java</div>
+                <div class="tab">Kotlin</div>
+            </div>
+
+            <div class="tab-content active">
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-lang">Java</span>
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    </div>
+                    <pre><code>AdRequestConfiguration.Builder configuration =
+    AdRequestConfiguration.Companion.builder(context, <span class="string">"Your_placement_name"</span>);</code></pre>
+                </div>
+            </div>
+
+            <div class="tab-content">
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-lang">Kotlin</span>
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    </div>
+                    <pre><code><span class="keyword">val</span> configuration = AdRequestConfiguration.builder(context, <span class="string">"Your_placement_name"</span>)</code></pre>
+                </div>
+            </div>
+
+            <h2>Step 2: Load the Ad</h2>
+
+            <p>Use the <code>AdSterAdLoader</code> to load the interstitial ad with appropriate listeners:</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-lang">Java</span>
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                </div>
+                <pre><code>AdSterAdLoader.Companion.builder()
+    .withAdsListener(<span class="keyword">new</span> MediationAdListener() {
+        <span class="annotation">@Override</span>
+        <span class="keyword">public void</span> <span class="function">onInterstitialAdLoaded</span>(<span class="annotation">@NonNull</span> MediationInterstitialAd ad) {
+            <span class="comment">// Show interstitial ad here</span>
+        }
+
+        <span class="annotation">@Override</span>
+        <span class="keyword">public void</span> <span class="function">onFailure</span>(<span class="annotation">@NonNull</span> AdError adError) {
+            <span class="comment">// Handle failure</span>
+        }
+    })
+    .withInterstitialAdEventsListener(<span class="keyword">new</span> InterstitialAdEventsListener() {
+        <span class="annotation">@Override</span>
+        <span class="keyword">public void</span> <span class="function">onAdClicked</span>() { }
+
+        <span class="annotation">@Override</span>
+        <span class="keyword">public void</span> <span class="function">onAdImpression</span>() { }
+
+        <span class="annotation">@Override</span>
+        <span class="keyword">public void</span> <span class="function">onAdOpened</span>() { }
+
+        <span class="annotation">@Override</span>
+        <span class="keyword">public void</span> <span class="function">onAdClosed</span>() { }
+
+        <span class="annotation">@Override</span>
+        <span class="keyword">public void</span> <span class="function">onAdRevenuePaid</span>(<span class="keyword">double</span> revenue,
+            String adUnitId, String network) { }
+    })
+    .build()
+    .loadAd(configuration.build());</code></pre>
+            </div>
+
+            <h2>Step 3: Display the Ad</h2>
+
+            <p>Call <code>showAd(activity)</code> within the success callback:</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-lang">Java</span>
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                </div>
+                <pre><code><span class="annotation">@Override</span>
+<span class="keyword">public void</span> <span class="function">onInterstitialAdLoaded</span>(<span class="annotation">@NonNull</span> MediationInterstitialAd ad) {
+    ad.showAd(activity);
+}</code></pre>
+            </div>
+
+            <div class="alert alert-warning">
+                <span class="alert-icon">⚠️</span>
+                <div class="alert-content">
+                    <div class="alert-title">Important</div>
+                    <p>Pass only an Activity's context to the <code>showAd()</code> method.</p>
+                </div>
+            </div>
+
+            <h2>Event Listeners</h2>
+
+            <p>The <code>InterstitialAdEventsListener</code> supports the following callbacks:</p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Callback</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>onAdClicked()</code></td>
+                        <td>User clicked on the ad</td>
+                    </tr>
+                    <tr>
+                        <td><code>onAdImpression()</code></td>
+                        <td>Ad impression recorded</td>
+                    </tr>
+                    <tr>
+                        <td><code>onAdOpened()</code></td>
+                        <td>Ad was opened</td>
+                    </tr>
+                    <tr>
+                        <td><code>onAdClosed()</code></td>
+                        <td>Ad was closed</td>
+                    </tr>
+                    <tr>
+                        <td><code>onAdRevenuePaid()</code></td>
+                        <td>Provides revenue and network information</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Page Navigation -->
+            <div class="page-nav">
+                <a href="banner-ad.html" class="page-nav-link">
+                    <span class="page-nav-label">Previous</span>
+                    <span class="page-nav-title">← Banner Ad</span>
+                </a>
+                <a href="rewarded-ad.html" class="page-nav-link">
+                    <span class="page-nav-label">Next</span>
+                    <span class="page-nav-title">Rewarded Ad →</span>
+                </a>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <p>© 2024 AdSter Technology. All rights reserved.</p>
+        </footer>
+    </main>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

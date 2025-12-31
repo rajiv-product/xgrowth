@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ads.txt Management | AdSter Documentation</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/png" href="../images/favicon.png">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <a href="index.html" class="logo">
+            <img src="../images/adster-logo.webp" alt="AdSter">
+            <span>Documentation</span>
+        </a>
+        <div class="header-actions">
+            <div class="search-box">
+                <span>🔍</span>
+                <input type="text" placeholder="Search documentation...">
+            </div>
+            <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
+        </div>
+    </header>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <nav class="sidebar-nav">
+            <div class="nav-group">
+                <a href="index.html" class="nav-item">
+                    <span class="icon">📱</span>
+                    SDK Implementation Guide
+                </a>
+            </div>
+
+            <div class="nav-group">
+                <div class="nav-group-title">How to Configure</div>
+                <a href="initializing-sdk.html" class="nav-item">
+                    <span class="icon">💡</span>
+                    Initializing the SDK
+                </a>
+            </div>
+
+            <div class="nav-group">
+                <div class="nav-group-title">How to Render an Ad</div>
+                <a href="app-open.html" class="nav-item">
+                    <span class="icon">📪</span>
+                    App Open
+                </a>
+                <a href="banner-ad.html" class="nav-item">
+                    <span class="icon">📪</span>
+                    Banner Ad
+                </a>
+                <a href="interstitial-ad.html" class="nav-item">
+                    <span class="icon">📪</span>
+                    Interstitial Ad
+                </a>
+                <a href="rewarded-ad.html" class="nav-item">
+                    <span class="icon">📪</span>
+                    Rewarded Ad
+                </a>
+                <a href="native-ad.html" class="nav-item">
+                    <span class="icon">📪</span>
+                    Native Ad
+                </a>
+            </div>
+
+            <div class="nav-group">
+                <div class="nav-group-title">Beta Ad Formats</div>
+                <a href="in-stream-video.html" class="nav-item">
+                    <span class="icon">🎨</span>
+                    In-stream Video (Beta)
+                </a>
+                <a href="banner-video.html" class="nav-item">
+                    <span class="icon">🎨</span>
+                    Banner Video (Beta)
+                </a>
+            </div>
+
+            <div class="nav-group">
+                <div class="nav-group-title">Additional Features</div>
+                <a href="ads-txt-management.html" class="nav-item active">
+                    <span class="icon">📄</span>
+                    Ads.txt Management
+                </a>
+            </div>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="content">
+            <h1><span>📄</span> Integrate Ads & APP Ads For Easy Management</h1>
+
+            <p>AdSter provides a unified system for managing ads.txt and app-ads.txt files through a centralized UI, designed for product and operations teams.</p>
+
+            <h2>Overview</h2>
+
+            <p>The platform provides an easy-to-use UI for adding and updating ads.txt from a centralized dashboard for product and AdOps teams. This represents a one-time integration where both domain files require linking to AdSter's URL.</p>
+
+            <div class="alert alert-success">
+                <span class="alert-icon">✅</span>
+                <div class="alert-content">
+                    <div class="alert-title">Key Benefits</div>
+                    <ul>
+                        <li>Centralized management of ads.txt and app-ads.txt</li>
+                        <li>Easy UI for product and AdOps teams</li>
+                        <li>Automatic synchronization</li>
+                        <li>No manual file updates required</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h2>Implementation Process</h2>
+
+            <h3>For Product/Ops Teams:</h3>
+
+            <ol>
+                <li>Navigate to <strong>"Managed Ads TXT"</strong> section in <a href="https://app.adster.tech" target="_blank">app.adster.tech</a></li>
+                <li>Add your domain (e.g., "https://adster.tech")</li>
+                <li>The system automatically fetches existing files</li>
+                <li>Make necessary entries and save</li>
+                <li>A managed URL is generated for automated file serving</li>
+            </ol>
+
+            <h3>Example Generated URL:</h3>
+
+            <p>The system provides URLs like:</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-lang">URL</span>
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                </div>
+                <pre><code>https://storage.googleapis.com/public-assets-adstxtmanage/[site-name]-app-ads.txt</code></pre>
+            </div>
+
+            <h2>Update Mechanism</h2>
+
+            <p>Rather than manually updating domain files repeatedly, websites retrieve the published configuration from AdSter's URL on a regular schedule (once daily or every 2-3 days). This ensures consistent synchronization without manual intervention.</p>
+
+            <div class="alert alert-info">
+                <span class="alert-icon">💡</span>
+                <div class="alert-content">
+                    <div class="alert-title">How It Works</div>
+                    <ol>
+                        <li>Set up a redirect or include on your domain pointing to the AdSter-managed URL</li>
+                        <li>AdSter's system keeps the ads.txt content up-to-date</li>
+                        <li>Your domain automatically serves the latest authorized sellers list</li>
+                    </ol>
+                </div>
+            </div>
+
+            <h2>Configuration Options</h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>File Type</th>
+                        <th>Purpose</th>
+                        <th>Location</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>ads.txt</code></td>
+                        <td>Web domain authorized sellers</td>
+                        <td>yourdomain.com/ads.txt</td>
+                    </tr>
+                    <tr>
+                        <td><code>app-ads.txt</code></td>
+                        <td>Mobile app authorized sellers</td>
+                        <td>yourdomain.com/app-ads.txt</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Page Navigation -->
+            <div class="page-nav">
+                <a href="banner-video.html" class="page-nav-link">
+                    <span class="page-nav-label">Previous</span>
+                    <span class="page-nav-title">← Banner Video (Beta)</span>
+                </a>
+                <div></div>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <p>© 2024 AdSter Technology. All rights reserved.</p>
+        </footer>
+    </main>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

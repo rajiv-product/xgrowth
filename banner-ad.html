@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Banner Ad | AdSter Documentation</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/png" href="../images/favicon.png">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <a href="index.html" class="logo">
+            <img src="../images/adster-logo.webp" alt="AdSter">
+            <span>Documentation</span>
+        </a>
+        <div class="header-actions">
+            <div class="search-box">
+                <span>🔍</span>
+                <input type="text" placeholder="Search documentation...">
+            </div>
+            <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
+        </div>
+    </header>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <nav class="sidebar-nav">
+            <div class="nav-group">
+                <a href="index.html" class="nav-item">
+                    <span class="icon">📱</span>
+                    SDK Implementation Guide
+                </a>
+            </div>
+
+            <div class="nav-group">
+                <div class="nav-group-title">How to Configure</div>
+                <a href="initializing-sdk.html" class="nav-item">
+                    <span class="icon">💡</span>
+                    Initializing the SDK
+                </a>
+            </div>
+
+            <div class="nav-group">
+                <div class="nav-group-title">How to Render an Ad</div>
+                <a href="app-open.html" class="nav-item">
+                    <span class="icon">📪</span>
+                    App Open
+                </a>
+                <a href="banner-ad.html" class="nav-item active">
+                    <span class="icon">📪</span>
+                    Banner Ad
+                </a>
+                <a href="interstitial-ad.html" class="nav-item">
+                    <span class="icon">📪</span>
+                    Interstitial Ad
+                </a>
+                <a href="rewarded-ad.html" class="nav-item">
+                    <span class="icon">📪</span>
+                    Rewarded Ad
+                </a>
+                <a href="native-ad.html" class="nav-item">
+                    <span class="icon">📪</span>
+                    Native Ad
+                </a>
+            </div>
+
+            <div class="nav-group">
+                <div class="nav-group-title">Beta Ad Formats</div>
+                <a href="in-stream-video.html" class="nav-item">
+                    <span class="icon">🎨</span>
+                    In-stream Video (Beta)
+                </a>
+                <a href="banner-video.html" class="nav-item">
+                    <span class="icon">🎨</span>
+                    Banner Video (Beta)
+                </a>
+            </div>
+
+            <div class="nav-group">
+                <div class="nav-group-title">Additional Features</div>
+                <a href="ads-txt-management.html" class="nav-item">
+                    <span class="icon">📄</span>
+                    Ads.txt Management
+                </a>
+            </div>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="content">
+            <h1><span>📪</span> Banner Ad</h1>
+
+            <p>This guide provides instructions for loading and rendering banner advertisements in your application using the AdSter SDK.</p>
+
+            <h2>Step 1: Create AdRequestConfiguration</h2>
+
+            <p>Initialize the configuration with your placement name:</p>
+
+            <div class="tabs">
+                <div class="tab active">Java</div>
+                <div class="tab">Kotlin</div>
+            </div>
+
+            <div class="tab-content active">
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-lang">Java</span>
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    </div>
+                    <pre><code>AdRequestConfiguration.Builder configuration =
+    AdRequestConfiguration.Companion.builder(context, <span class="string">"Your_placement_name"</span>);</code></pre>
+                </div>
+            </div>
+
+            <div class="tab-content">
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-lang">Kotlin</span>
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    </div>
+                    <pre><code><span class="keyword">val</span> configuration = AdRequestConfiguration.builder(context, <span class="string">"Your_placement_name"</span>)</code></pre>
+                </div>
+            </div>
+
+            <h2>Step 2: Load the Ad</h2>
+
+            <p>Call <code>loadAd()</code> with listeners for handling callbacks:</p>
+
+            <div class="tabs">
+                <div class="tab active">Java</div>
+                <div class="tab">Kotlin</div>
+            </div>
+
+            <div class="tab-content active">
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-lang">Java</span>
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    </div>
+                    <pre><code>AdSterAdLoader.Companion.builder()
+    .withAdsListener(<span class="keyword">new</span> MediationAdListener() {
+        <span class="annotation">@Override</span>
+        <span class="keyword">public void</span> <span class="function">onBannerAdLoaded</span>(<span class="annotation">@NonNull</span> MediationBannerAd ad) {
+            <span class="comment">// Show banner ad here</span>
+        }
+
+        <span class="annotation">@Override</span>
+        <span class="keyword">public void</span> <span class="function">onFailure</span>(<span class="annotation">@NonNull</span> AdError adError) {
+            <span class="comment">// Handle failure here</span>
+        }
+    })
+    .withAdsEventsListener(<span class="keyword">new</span> AdEventsListener() {
+        <span class="annotation">@Override</span>
+        <span class="keyword">public void</span> <span class="function">onAdClicked</span>() { }
+
+        <span class="annotation">@Override</span>
+        <span class="keyword">public void</span> <span class="function">onAdImpression</span>() { }
+
+        <span class="annotation">@Override</span>
+        <span class="keyword">public void</span> <span class="function">onAdRevenuePaid</span>(<span class="keyword">double</span> revenue,
+            <span class="annotation">@NotNull</span> String adUnitId, <span class="annotation">@NotNull</span> String network) { }
+    })
+    .build()
+    .loadAd(configuration.build());</code></pre>
+                </div>
+            </div>
+
+            <div class="tab-content">
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-lang">Kotlin</span>
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    </div>
+                    <pre><code>AdSterAdLoader.builder()
+    .withAdsListener(<span class="keyword">object</span> : MediationAdListener() {
+        <span class="keyword">override fun</span> <span class="function">onBannerAdLoaded</span>(ad: MediationBannerAd) {
+            <span class="comment">// Show banner ad here</span>
+        }
+
+        <span class="keyword">override fun</span> <span class="function">onFailure</span>(adError: AdError) {
+            <span class="comment">// Handle failure here</span>
+        }
+    })
+    .withAdsEventsListener(<span class="keyword">object</span> : AdEventsListener() {
+        <span class="keyword">override fun</span> <span class="function">onAdClicked</span>() { }
+        <span class="keyword">override fun</span> <span class="function">onAdImpression</span>() { }
+        <span class="keyword">override fun</span> <span class="function">onAdRevenuePaid</span>(revenue: Double, adUnitId: String, network: String) { }
+    })
+    .build()
+    .loadAd(configuration.build())</code></pre>
+                </div>
+            </div>
+
+            <h2>Step 3: Display the Ad</h2>
+
+            <p>Retrieve the view from the loaded ad and add it to your layout:</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-lang">Java</span>
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                </div>
+                <pre><code>container.removeAllViews();
+container.addView(ad.getView());</code></pre>
+            </div>
+
+            <h2>Step 4: Cleanup</h2>
+
+            <p>Invoke <code>destroy()</code> when the activity or fragment is detached:</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-lang">Java</span>
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                </div>
+                <pre><code>ad.destroy();</code></pre>
+            </div>
+
+            <h2>Key Callbacks</h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Callback</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>onBannerAdLoaded</code></td>
+                        <td>Ad successfully loaded</td>
+                    </tr>
+                    <tr>
+                        <td><code>onFailure</code></td>
+                        <td>Ad loading failed</td>
+                    </tr>
+                    <tr>
+                        <td><code>onAdClicked</code></td>
+                        <td>User clicked advertisement</td>
+                    </tr>
+                    <tr>
+                        <td><code>onAdImpression</code></td>
+                        <td>Ad impression tracked</td>
+                    </tr>
+                    <tr>
+                        <td><code>onAdRevenuePaid</code></td>
+                        <td>Revenue data provided with network information</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Page Navigation -->
+            <div class="page-nav">
+                <a href="app-open.html" class="page-nav-link">
+                    <span class="page-nav-label">Previous</span>
+                    <span class="page-nav-title">← App Open</span>
+                </a>
+                <a href="interstitial-ad.html" class="page-nav-link">
+                    <span class="page-nav-label">Next</span>
+                    <span class="page-nav-title">Interstitial Ad →</span>
+                </a>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <p>© 2024 AdSter Technology. All rights reserved.</p>
+        </footer>
+    </main>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

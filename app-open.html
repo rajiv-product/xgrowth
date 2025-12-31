@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>App Open Ad | AdSter Documentation</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/png" href="../images/favicon.png">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <a href="index.html" class="logo">
+            <img src="../images/adster-logo.webp" alt="AdSter">
+            <span>Documentation</span>
+        </a>
+        <div class="header-actions">
+            <div class="search-box">
+                <span>🔍</span>
+                <input type="text" placeholder="Search documentation...">
+            </div>
+            <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
+        </div>
+    </header>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <nav class="sidebar-nav">
+            <div class="nav-group">
+                <a href="index.html" class="nav-item">
+                    <span class="icon">📱</span>
+                    SDK Implementation Guide
+                </a>
+            </div>
+
+            <div class="nav-group">
+                <div class="nav-group-title">How to Configure</div>
+                <a href="initializing-sdk.html" class="nav-item">
+                    <span class="icon">💡</span>
+                    Initializing the SDK
+                </a>
+            </div>
+
+            <div class="nav-group">
+                <div class="nav-group-title">How to Render an Ad</div>
+                <a href="app-open.html" class="nav-item active">
+                    <span class="icon">📪</span>
+                    App Open
+                </a>
+                <a href="banner-ad.html" class="nav-item">
+                    <span class="icon">📪</span>
+                    Banner Ad
+                </a>
+                <a href="interstitial-ad.html" class="nav-item">
+                    <span class="icon">📪</span>
+                    Interstitial Ad
+                </a>
+                <a href="rewarded-ad.html" class="nav-item">
+                    <span class="icon">📪</span>
+                    Rewarded Ad
+                </a>
+                <a href="native-ad.html" class="nav-item">
+                    <span class="icon">📪</span>
+                    Native Ad
+                </a>
+            </div>
+
+            <div class="nav-group">
+                <div class="nav-group-title">Beta Ad Formats</div>
+                <a href="in-stream-video.html" class="nav-item">
+                    <span class="icon">🎨</span>
+                    In-stream Video (Beta)
+                </a>
+                <a href="banner-video.html" class="nav-item">
+                    <span class="icon">🎨</span>
+                    Banner Video (Beta)
+                </a>
+            </div>
+
+            <div class="nav-group">
+                <div class="nav-group-title">Additional Features</div>
+                <a href="ads-txt-management.html" class="nav-item">
+                    <span class="icon">📄</span>
+                    Ads.txt Management
+                </a>
+            </div>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="content">
+            <h1><span>📪</span> App Open Ad</h1>
+
+            <p>The AdSter SDK provides methods to load and display App Open ads, which are a proprietary Google Ad Manager and AdMob ad format. App Open ads appear when users open or return to your app.</p>
+
+            <h2>Step 1: Create Ad Request Configuration</h2>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-lang">Kotlin</span>
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                </div>
+                <pre><code><span class="keyword">val</span> configuration = AdRequestConfiguration.builder(context, <span class="string">"Your_placement_name"</span>)</code></pre>
+            </div>
+
+            <h2>Step 2: Load App Open Ad</h2>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-lang">Kotlin</span>
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                </div>
+                <pre><code>AdSterAdLoader.builder()
+    .withAdsListener(<span class="keyword">object</span> : MediationAdListener() {
+        <span class="keyword">override fun</span> <span class="function">onAppOpenAdLoaded</span>(ad: MediationAppOpenAd) {
+            <span class="keyword">super</span>.onAppOpenAdLoaded(ad)
+            <span class="comment">// Show App Open Ad here</span>
+        }
+
+        <span class="keyword">override fun</span> <span class="function">onFailure</span>(adError: AdError) {
+            <span class="comment">// Handle failure callback here</span>
+        }
+    })
+    .withAppOpenAdEventsListener(<span class="keyword">object</span> : AppOpenAdEventsListener() {
+        <span class="keyword">override fun</span> <span class="function">onAdClicked</span>() { }
+        <span class="keyword">override fun</span> <span class="function">onAdClosed</span>() { }
+        <span class="keyword">override fun</span> <span class="function">onAdImpression</span>() { }
+        <span class="keyword">override fun</span> <span class="function">onAdOpened</span>() { }
+        <span class="keyword">override fun</span> <span class="function">onFailure</span>(adError: AdError?) { }
+        <span class="keyword">override fun</span> <span class="function">onAdRevenuePaid</span>(revenue: Double, adUnitId: String, network: String) { }
+    })
+    .build()
+    .loadAd(configuration.build())</code></pre>
+            </div>
+
+            <h2>Step 3: Display App Open Ad</h2>
+
+            <p>Within the <code>onAppOpenAdLoaded</code> callback, invoke the display method:</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-lang">Kotlin</span>
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                </div>
+                <pre><code><span class="keyword">override fun</span> <span class="function">onAppOpenAdLoaded</span>(ad: MediationAppOpenAd) {
+    <span class="keyword">super</span>.onAppOpenAdLoaded(ad)
+    ad.showAd(activity)
+}</code></pre>
+            </div>
+
+            <h2>Callback Events</h2>
+
+            <p>The SDK provides event listeners for tracking ad interactions:</p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Callback</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>onAdClicked</code></td>
+                        <td>When users interact with the ad</td>
+                    </tr>
+                    <tr>
+                        <td><code>onAdImpression</code></td>
+                        <td>When ad displays</td>
+                    </tr>
+                    <tr>
+                        <td><code>onAdOpened</code></td>
+                        <td>When ad opens</td>
+                    </tr>
+                    <tr>
+                        <td><code>onAdClosed</code></td>
+                        <td>When ad closes</td>
+                    </tr>
+                    <tr>
+                        <td><code>onFailure</code></td>
+                        <td>Error handling</td>
+                    </tr>
+                    <tr>
+                        <td><code>onAdRevenuePaid</code></td>
+                        <td>Revenue tracking with network source</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Page Navigation -->
+            <div class="page-nav">
+                <a href="initializing-sdk.html" class="page-nav-link">
+                    <span class="page-nav-label">Previous</span>
+                    <span class="page-nav-title">← Initializing the SDK</span>
+                </a>
+                <a href="banner-ad.html" class="page-nav-link">
+                    <span class="page-nav-label">Next</span>
+                    <span class="page-nav-title">Banner Ad →</span>
+                </a>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <p>© 2024 AdSter Technology. All rights reserved.</p>
+        </footer>
+    </main>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
